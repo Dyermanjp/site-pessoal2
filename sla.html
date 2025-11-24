@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atalhos Pessoais</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #fff;
+        }
+        header {
+            background: linear-gradient(45deg, #FF5733, #FFC300);
+            padding: 20px;
+            font-size: 2em;
+        }
+        .menu {
+            background-color: #333;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #555;
+            transition: background-color 0.3s;
+        }
+        .menu a:hover {
+            background-color: #777;
+        }
+        .message {
+            background-color: #222;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .footer {
+            background-color: #222;
+            color: #bbb;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div id="greeting"></div>
+    <div class="menu">
+        <a href="#" onclick="showMessage('instagram')">Instagram</a>
+        <a href="#" onclick="showMessage('tiktok')">TikTok</a>
+        <a href="#" onclick="showMessage('youtube')">YouTube</a>
+        <a href="#" onclick="showMessage('chatgpt')">ChatGPT</a>
+        <a href="#" onclick="showMessage('gmail')">Gmail</a>
+    </div>
+</header>
+
+<div id="message" class="message"></div>
+
+<div class="footer">
+    <p>Site pessoal de JP</p>
+</div>
+
+<script>
+    // Saudação dependendo do horário
+    const greetingElement = document.getElementById('greeting');
+    const hours = new Date().getHours();
+    if (hours < 12) {
+        greetingElement.innerHTML = 'Bom dia, JP!';
+    } else if (hours < 18) {
+        greetingElement.innerHTML = 'Boa tarde, JP!';
+    } else {
+        greetingElement.innerHTML = 'Boa noite, JP!';
+    }
+
+    // Função para mostrar mensagens personalizadas
+    function showMessage(site) {
+        let message = '';
+        let link = '';
+
+        switch(site) {
+            case 'instagram':
+                message = 'Eai JP, alguém mandou mensagem?.. Ou vai só ver o feed mesmo?..';
+                link = 'https://www.instagram.com';
+                break;
+            case 'tiktok':
+                message = 'Assistir um tiktokzinho né JP? Para relaxar um pouquinho..';
+                link = 'https://www.tiktok.com';
+                break;
+            case 'youtube':
+                message = 'Assistir um videozinho né naqueles pique.. Ou só vai de shorts mesmo? haha';
+                link = 'https://www.youtube.com';
+                break;
+            case 'chatgpt':
+                message = 'Chatzinho é daora mermão, vai tratar de algum assunto sério? Ou só algo que tu não conseguiu resolver ainda? Kkkkk';
+                link = 'https://chat.openai.com';
+                break;
+            case 'gmail':
+                message = 'O\'que foi dessa vez? Código? Vai responder e-mail?..';
+                link = 'https://mail.google.com';
+                break;
+            default:
+                message = 'Clique em um atalho para ver a mensagem!';
+                link = '#';
+        }
+
+        document.getElementById('message').innerHTML = `
+            <p>${message}</p>
+            <a href="${link}" target="_blank" style="color: #FFD700; text-decoration: none; font-size: 1.2em;">Ir para o site</a>
+        `;
+    }
+</script>
+
+</body>
+</html>
