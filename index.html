@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>JP – Atalhos</title>
+
+<!-- favicon (imagem que você enviou) -->
+<link rel="icon" href="/mnt/data/0408a110-e38e-4dfb-8858-fbdbab8bdbe9.png" />
+
+<!-- fontes -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Give+You+Glory&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --side-h: 580px;
+    --accent-1: #d94b3a; /* vermelho mais seco */
+    --accent-2: #ffb36b; /* laranja/amarelo */
+    --card-bg: rgba(255,245,243,0.95);
+    --text: #232323;
+    --muted: #6b6b6b;
+  }
+
+  body.dark {
+    --accent-1: #8f3f37;
+    --accent-2: #b07a35;
+    --card-bg: rgba(30,30,30,0.88);
+    --text: #eae6e2;
+    --muted: #bdb6ad;
+    background: linear-gradient(180deg,#2b2222,#2f2625);
+  }
+
+  body{
+    margin:0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(180deg, #ffd7c6 0%, #ffc6a8 50%, #ffb38a 100%);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    transition: background .4s ease, color .3s ease;
+  }
+
+  @font-face {
+      font-family: "Balqis";
+      src: url("https://fonts.cdnfonts.com/s/17394/Balqis.woff") format("woff");
+  }
+
+  header{
+    padding:28px 26px;
+    font-family:"Balqis",cursive;
+    font-size:3.2rem;
+    position:sticky;
+    top:0;
+    z-index:60;
+    background: linear-gradient(to bottom, rgba(255,140,110,0.45), rgba(255,180,140,0.18), rgba(255,255,255,0));
+    backdrop-filter: blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    transition: opacity .35s ease;
+  }
+
+  /* theme button (sun -> moon) */
+  .theme-btn{
+    width:56px; height:56px; border-radius:14px;
+    display:inline-grid; place-items:center; cursor:pointer;
+    border:none; background: var(--card-bg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+  .theme-btn:active{ transform: scale(.97); }
+
+  /* PRE-OVERLAY (AVISO INICIAL) */
+  #preOverlay{
+    position:fixed; inset:0; z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+  }
+  #preCard{
+    background: rgba(255,255,255,0.95);
+    padding:28px; border-radius:16px; text-align:center;
+    max-width:420px; width:90%; position:relative;
+  }
+  #preCard p{ margin:0 0 14px; color: #222; line-height:1.45; }
+  #enterBtn{
+    font-family: "Caveat", cursive;
+    font-size:1.9rem;
+    padding:10px 26px;
+    border-radius:12px;
+    border:none;
+    background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+    color:white; cursor:pointer;
+  }
+
+  /* theme toggle on overlay (small) */
+  #preThemeBtn{
+    position:absolute;
+    right:12px;
+    top:12px;
+    width:44px; height:44px; border-radius:10px;
+    border:none; display:inline-grid; place-items:center; cursor:pointer;
+    background:var(--card-bg);
+  }
+
+  /* Easter eggs button (fixed) */
+  #eggBtn{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:900;
+    font-family:"Caveat",cursive;
+    font-size:1.45rem;
+    padding:10px 18px;
+    border-radius:12px;
+    border:none;
+    background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+    color:white;
+    box-shadow:0 12px 30px rgba(0,0,0,0.12);
+    cursor:pointer;
+  }
+
+  /* Easter clues modal */
+  #eggPanel{
+    position:fixed; inset:0; z-index:950; display:none;
+    align-items:center; justify-content:center;
+    background: rgba(0,0,0,0.45); backdrop-filter: blur(3px);
+  }
+  #eggCard{
+    width:92%; max-width:420px; background:var(--card-bg);
+    border-radius:14px; padding:20px 22px; position:relative;
+  }
+  #eggCard h3{ font-family:"Caveat",cursive; margin:6px 0 10px; font-size:2rem; }
+  #eggClose{ position:absolute; right:12px; top:10px; cursor:pointer; font-size:1.4rem; }
+
+  /* layout main */
+  .main{ display:flex; gap:34px; padding:28px; align-items:flex-start; }
+  .list{ flex:1; max-width:680px; min-height:var(--side-h); display:flex; flex-direction:column; gap:16px; }
+  .item{
+    background: var(--card-bg);
+    padding:22px 24px; border-radius:14px; display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer; font-size:1.9rem; box-shadow:0 10px 26px rgba(0,0,0,0.05);
+  }
+  .left{ display:flex; align-items:center; gap:12px; }
+  .svg-icon{ width:34px; height:34px; flex:0 0 34px; opacity:.98; }
+  .arrow{ font-size:1.8rem; color:var(--muted); transition:transform .3s ease; }
+  .item:hover{ transform: translateY(-4px); }
+
+  .content{
+    max-height:0; overflow:hidden; border-radius:0 0 14px 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+    padding:0 24px; transition:max-height .42s ease;
+  }
+  .content p{ margin:18px 0; font-size:1.12rem; color:var(--text); line-height:1.6; }
+
+  .open-btn{
+    display:inline-block; margin-bottom:18px; padding:10px 20px; border-radius:12px;
+    background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#fff;
+    text-decoration:none; font-family:"Give You Glory",cursive; font-size:1.1rem;
+  }
+
+  .about-box{
+    width:360px; min-height:var(--side-h); background:white; border-radius:14px; padding:22px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.06);
+  }
+  .about-box h2{ font-family:"Caveat",cursive; font-size:2.2rem; margin:0 0 10px; color:var(--text); }
+  .about-box p{ color:var(--muted); line-height:1.6; margin:0 0 10px; }
+
+  .egg-toast{
+    position:fixed; left:50%; bottom:36px; transform:translateX(-50%);
+    background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#fff; padding:10px 16px;
+    border-radius:12px; display:none; z-index:1200;
+  }
+
+  /* small screens */
+  @media (max-width:900px){
+    .main{ flex-direction:column; padding:18px; }
+    .about-box{ width:100%; min-height:auto; }
+    .list{ min-height:auto; }
+    header{ font-size:2.2rem; padding:18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PRE-OVERLAY / AVISO -->
+<div id="preOverlay">
+  <div id="preCard" role="dialog" aria-modal="true">
+    <!-- theme toggle added to overlay (works) -->
+    <button id="preThemeBtn" aria-label="Alternar tema (overlay)">
+      <svg id="preSun" viewBox="0 0 24 24" width="20" height="20" style="position:absolute;"><circle cx="12" cy="12" r="3.5" fill="currentColor"/></svg>
+      <svg id="preMoon" viewBox="0 0 24 24" width="20" height="20" style="position:absolute;opacity:0;transform:scale(.75) rotate(-18deg);"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" fill="currentColor"/></svg>
+    </button>
+
+    <p style="font-size:1.05rem;"><strong>Aviso!</strong><br><br>
+    O modo claro do site é <strong>um pouco</strong> claro mesmo. Na direita superior você tem a opção de deixar no modo escuro antes de entrar.</p>
+    <button id="enterBtn">entrar no site</button>
+  </div>
+</div>
+
+<header id="header">
+  <div id="greeting">Bom dia, JP!</div>
+
+  <!-- theme toggle button sun / moon (main header) -->
+  <button class="theme-btn" id="themeToggle" aria-label="Alternar tema">
+    <span style="position:relative; width:34px; height:34px;">
+      <!-- sun -->
+      <svg id="sun" class="svg-icon" viewBox="0 0 24 24" style="position:absolute;left:0;top:0;">
+        <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+          <g stroke="currentColor">
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+          </g>
+        </g>
+      </svg>
+      <!-- moon -->
+      <svg id="moon" class="svg-icon" viewBox="0 0 24 24" style="position:absolute;left:0;top:0;opacity:0;transform:scale(.75) rotate(-18deg);">
+        <path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z" fill="currentColor"/>
+      </svg>
+    </span>
+  </button>
+</header>
+
+<!-- Easter eggs button -->
+<button id="eggBtn">Easter eggs</button>
+
+<!-- Easter clues panel -->
+<div id="eggPanel" aria-hidden="true">
+  <div id="eggCard" role="dialog" aria-modal="true">
+    <div id="eggClose" aria-label="Fechar">✕</div>
+    <h3>Pistas dos Easter Eggs</h3>
+    <p><strong>E1</strong> — Dê um duplo clique na saudação (onde está "Bom dia/Boa tarde/...").</p>
+    <p><strong>E2</strong> — Digite rapidamente as letras <code>j</code> depois <code>p</code>.</p>
+    <p><strong>E3</strong> — Mantenha o mouse sobre um botão “Acessar” por 3s.</p>
+    <p><strong>E4</strong> — Clique e segure onde tem "Sobre o site" por ~1s.</p>
+    <p><strong>E5</strong> — Clique 3 vezes no topo do site (em cima do bom dia/tarde/noite).</p>
+  </div>
+</div>
+
+<!-- toast -->
+<div id="eggToast" class="egg-toast"></div>
+
+<main class="main" id="mainContent" aria-hidden="true">
+  <section class="list" id="list">
+    <!-- TikTok -->
+    <div class="item" onclick="toggle(0)">
+      <div class="left">
+        <!-- simple TikTok-style SVG icon -->
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20 7.8c-1.3 0-2.2-.7-2.8-1.1v5.2c0 2.7-1.9 4.5-4.6 4.5-2.7 0-4.6-1.8-4.6-4.5S10.9 7.8 13.6 7.8c.2 0 .5 0 .7.05V4.5h2.8v3.25c.7.4 1.8 1.05 2.9 1.05z"/>
+        </svg>
+        <span>TikTok</span>
+      </div>
+      <span class="arrow">ᐅ</span>
+    </div>
+    <div class="content">
+      <p id="tiktokText"></p>
+      <a class="open-btn" href="https://www.tiktok.com" target="_blank">Acessar TikTok</a>
+    </div>
+
+    <!-- Instagram -->
+    <div class="item" onclick="toggle(1)">
+      <div class="left">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zM12 8.5a4 4 0 100 8 4 4 0 000-8zM16.5 7a1 1 0 110 2 1 1 0 010-2z"/>
+        </svg>
+        <span>Instagram</span>
+      </div>
+      <span class="arrow">ᐅ</span>
+    </div>
+    <div class="content">
+      <p id="igText"></p>
+      <a class="open-btn" href="https://www.instagram.com" target="_blank">Acessar Instagram</a>
+    </div>
+
+    <!-- YouTube -->
+    <div class="item" onclick="toggle(2)">
+      <div class="left">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M21.6 8.2s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1-2.9-.2-7.3-.2-7.3-.2s-4.4 0-7.3.2c-.4 0-1.3.1-2.1 1-.6.7-.8 2.3-.8 2.3S1.5 9.9 1.5 11.7v.6c0 1.8.3 3.5.3 3.5s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.1 7.2.2 7.2.2s4.4 0 7.3-.2c.4 0 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.3-1.7.3-3.5v-.6c0-1.8-.3-3.5-.3-3.5zM10 14V10l4 2-4 2z"/>
+        </svg>
+        <span>YouTube</span>
+      </div>
+      <span class="arrow">ᐅ</span>
+    </div>
+    <div class="content">
+      <p id="ytText"></p>
+      <a class="open-btn" href="https://www.youtube.com" target="_blank">Acessar YouTube</a>
+    </div>
+
+    <!-- ChatGPT -->
+    <div class="item" onclick="toggle(3)">
+      <div class="left">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 3a4 4 0 00-4 4v1H8a3 3 0 00-3 3v1a3 3 0 003 3h.5v1.5A3.5 3.5 0 0015 20v-1h.5A3.5 3.5 0 0019 15.5V14a3 3 0 00-3-3h-0.5V7a4 4 0 00-4-4z"/>
+        </svg>
+        <span>ChatGPT</span>
+      </div>
+      <span class="arrow">ᐅ</span>
+    </div>
+    <div class="content">
+      <p id="gptText"></p>
+      <a class="open-btn" href="https://chat.openai.com" target="_blank">Acessar ChatGPT</a>
+    </div>
+
+    <!-- Gmail -->
+    <div class="item" onclick="toggle(4)">
+      <div class="left">
+        <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M2 6.5v11A2.5 2.5 0 004.5 20h15a2.5 2.5 0 002.5-2.5v-11L12 13 2 6.5z"/><path d="M4.5 4A2.5 2.5 0 002 6.5L12 13l10-6.5A2.5 2.5 0 0019.5 4h-15z"/>
+        </svg>
+        <span>Gmail</span>
+      </div>
+      <span class="arrow">ᐅ</span>
+    </div>
+    <div class="content">
+      <p id="gmailText"></p>
+      <a class="open-btn" href="https://mail.google.com" target="_blank">Acessar Gmail</a>
+    </div>
+  </section>
+
+  <aside class="about-box" id="about">
+    <h2 id="aboutTitle">Sobre o site</h2>
+
+    <p>Criei esse site só pra deixar minha vida mais rápida msm, sem ter que perder tempo toda hora.
+    Aqui eu clico e já vou direto onde preciso.</p>
+
+    <p>Coloquei umas mensagens só pra deixar mais daorinha sabe? Já que seria para uso pessoal kkkk.
+    Fiz no intuito de como se fosse eu conversando comigo mesmo, espero que tenha dado para entender.
+    Inclusive, toda vez que atualizar a página, há 1/2 de chance das frases mudarem.</p>
+
+    <p>A mensagem principal de bom dia/boa tarde/boa noite muda conforme a hora, porque eu achei que ficaria mais legal também.
+    &lt;12 = bom dia  •  &lt;18 = boa tarde  •  &lt;6 = boa noite</p>
+
+    <p>Visualzinho limpo, animadinho, clean, minimalista… eu curto assim e espero que tu concorde comigo professor kkkkk.</p>
+
+    <div class="about-footer"><b>FEITO POR JP</b></div>
+  </aside>
+</main>
+
+<script>
+/* ------------------ Helpers & DOM refs ------------------ */
+const preOverlay = document.getElementById('preOverlay');
+const preCard = document.getElementById('preCard');
+const enterBtn = document.getElementById('enterBtn');
+const mainContent = document.getElementById('mainContent');
+const gEl = document.getElementById('greeting');
+const header = document.getElementById('header');
+const themeBtn = document.getElementById('themeToggle');
+const sun = document.getElementById('sun');
+const moon = document.getElementById('moon');
+
+/* overlay theme btn refs */
+const preThemeBtn = document.getElementById('preThemeBtn');
+const preSun = document.getElementById('preSun');
+const preMoon = document.getElementById('preMoon');
+
+const eggBtn = document.getElementById('eggBtn');
+const eggPanel = document.getElementById('eggPanel');
+const eggClose = document.getElementById('eggClose');
+const eggToast = document.getElementById('eggToast');
+
+/* ------------------ Theme logic (shared) ------------------ */
+function setDark(val){
+  if(val){
+    document.body.classList.add('dark');
+    sun.style.opacity = '0';
+    moon.style.opacity = '1';
+    moon.style.transform = 'scale(1) rotate(0deg)';
+    // overlay icons
+    if(preSun && preMoon){ preSun.style.opacity = '0'; preMoon.style.opacity = '1'; preMoon.style.transform = 'scale(1) rotate(0deg)'; }
+  } else {
+    document.body.classList.remove('dark');
+    sun.style.opacity = '1';
+    moon.style.opacity = '0';
+    moon.style.transform = 'scale(.75) rotate(-18deg)';
+    if(preSun && preMoon){ preSun.style.opacity = '1'; preMoon.style.opacity = '0'; preMoon.style.transform = 'scale(.75) rotate(-18deg)'; }
+  }
+}
+const saved = localStorage.getItem('jp_dark') === '1';
+setDark(saved);
+
+/* toggle both header button and overlay button */
+function toggleTheme(){
+  const isDark = !document.body.classList.contains('dark');
+  setDark(isDark);
+  localStorage.setItem('jp_dark', isDark ? '1' : '0');
+  // small animation on main button
+  themeBtn.animate([{transform:'scale(1)'},{transform:'scale(.96)'},{transform:'scale(1)'}],{duration:220});
+}
+
+/* main header theme toggle */
+themeBtn.addEventListener('click', toggleTheme);
+/* overlay theme toggle */
+if(preThemeBtn) preThemeBtn.addEventListener('click', toggleTheme);
+
+/* ------------------ Pre-overlay (entrar) ------------------ */
+enterBtn.addEventListener('click', () => {
+  // anima saída
+  preOverlay.style.transition = 'opacity .35s ease, transform .35s ease';
+  preOverlay.style.opacity = '0';
+  preOverlay.style.transform = 'scale(.98)';
+  setTimeout(()=> {
+    preOverlay.style.display = 'none';
+    // tornar o conteúdo acessível
+    mainContent.setAttribute('aria-hidden','false');
+  }, 360);
+});
+
+/* ------------------ Saudação dinâmica ------------------ */
+function atualizarSaudacao(){
+  const h = new Date().getHours();
+  gEl.textContent = h < 12 ? "Bom dia, JP!" : h < 18 ? "Boa tarde, JP!" : "Boa noite, JP!";
+}
+atualizarSaudacao();
+
+/* header fade using IntersectionObserver */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) document.body.classList.add('scrolled');
+    else document.body.classList.remove('scrolled');
+  });
+}, {threshold: 0});
+io.observe(header);
+
+/* ------------------ Messages (50% alternating) ------------------ */
+function pick(a,b){ return Math.random() < 0.5 ? a : b; }
+
+document.getElementById("tiktokText").innerText = pick(
+  "Assistir um tiktokzinho né JP? Vai ver uns memes, dar umas boas risadas e perder a noção do tempo kkkkk.",
+  "Assistir um tiktokzinho né JP? Para relaxar um pouquinho.."
+);
+
+document.getElementById("igText").innerText = pick(
+  "Eai jp, será que teve partidaças na tntsports pra verificar? Algum stories novo de alguém? Vai checar o feed ou ver se chegou DM nova? 👀",
+  "Eai JP, alguém mandou mensagem?.. Ou vai só ver o feed mesmo?.."
+);
+
+document.getElementById("ytText").innerText = pick(
+  "Vai ver uns vídeos top? Ou vai ficar só no shorts infinito que causa aquela procrastinação? 🤣",
+  "Assistir um videozinho né naqueles pique.. Ou só vai de shorts mesmo? haha"
+);
+
+document.getElementById("gptText").innerText = pick(
+  "Vai só trocar uma com o chat? Resolver algum assunto sério? Ou só algum problema que tu teve e não tá sabendo resolver? 😂",
+  "Chatzinho é daora mermão, vai tratar de algum assunto sério? Ou só algo que tu não conseguiu resolver ainda? Kkkkk"
+);
+
+document.getElementById("gmailText").innerText = pick(
+  "Código chegando? Lição nova? Ou só um e-mail aleatório nada a ver? kkkkk",
+  "O que foi dessa vez? Código? Vai responder e-mail?.."
+);
+
+/* ------------------ Toggle expand/close ------------------ */
+function toggle(i){
+  const items = document.querySelectorAll('.item');
+  const contents = document.querySelectorAll('.content');
+  const isOpen = items[i].classList.contains('active');
+  items.forEach((el, idx) => {
+    el.classList.remove('active');
+    contents[idx].style.maxHeight = '0px';
+  });
+  if(!isOpen){
+    items[i].classList.add('active');
+    contents[i].style.maxHeight = contents[i].scrollHeight + 'px';
+  }
+}
+
+// ensure content sizing on resize
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.content').forEach((c,i) => {
+    if(document.querySelectorAll('.item')[i].classList.contains('active')){
+      c.style.maxHeight = c.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ------------------ Easter eggs UI (panel) ------------------ */
+eggBtn.addEventListener('click', ()=> { eggPanel.style.display = 'flex'; });
+eggClose.addEventListener('click', ()=> { eggPanel.style.display = 'none'; });
+
+function showEggToast(title, msg){
+  eggToast.innerHTML = `<strong>${title}</strong> — ${msg}`;
+  eggToast.style.display = 'block';
+  eggToast.style.opacity = '1';
+  setTimeout(()=>{ eggToast.style.opacity = '0'; setTimeout(()=> eggToast.style.display='none',300); }, 2600);
+}
+
+/* ------------------ Easter Eggs triggers & messages ------------------ */
+/* Messages for each egg (E1..E5) */
+const eeMessages = {
+  E1: "Como tu foi curioso, vai ter que adicionar ponto extra pra mim nesse trabalho!",
+  E2: "Fala aí professor, o meu foi o melhor né? kkkk brincadeira.",
+  E3: "Professor, negócio tá feio pro corinthians.. Será que nois passa pra final da cdb?",
+  E4: "Valeu aí pelo ano professor. Ano que vem tamo aí denovo.",
+  E5: "Professor, até prefiro fluzão, porém Flamengo tem que levar essa liberta e esse brasileirão. (Hoje é dia 24/11)"
+};
+
+/* Mapped triggers:
+   E1 = double-click on greeting (was EE2)
+   E2 = typing 'j' then 'p' quickly (was EE3)
+   E3 = hover over an access button for 3s (was EE6)
+   E4 = click-and-hold on the about title (~900ms) (was EE7)
+   E5 = triple click on header within 800ms (was EE8)
+*/
+
+/* E1: double-click on greeting */
+gEl.addEventListener('dblclick', ()=> showEggToast('E1', eeMessages.E1));
+
+/* E2: type sequence 'j' then 'p' (quick) */
+let seq = '';
+window.addEventListener('keydown', e=>{
+  seq += e.key.toLowerCase();
+  if(seq.endsWith('jp')){ showEggToast('E2', eeMessages.E2); seq = ''; }
+  if(seq.length > 6) seq = seq.slice(-6);
+});
+
+/* E3: hover over an access button for 3s */
+document.querySelectorAll('.open-btn').forEach((btn, index)=>{
+  let t;
+  btn.addEventListener('mouseenter', ()=> { t = setTimeout(()=> showEggToast('E3', eeMessages.E3), 3000); });
+  btn.addEventListener('mouseleave', ()=> clearTimeout(t));
+});
+
+/* E4: click-and-hold on the about title (~900ms) */
+const aboutTitle = document.getElementById('aboutTitle');
+let holdT;
+aboutTitle.addEventListener('mousedown', ()=> { holdT = setTimeout(()=> showEggToast('E4', eeMessages.E4), 900); });
+['mouseup','mouseleave','blur','mouseout'].forEach(ev => aboutTitle.addEventListener(ev, ()=> clearTimeout(holdT)));
+
+/* E5: triple click on header within 800ms window */
+let headerClicks = 0;
+header.addEventListener('click', ()=> {
+  headerClicks++;
+  if(headerClicks === 3){ showEggToast('E5', eeMessages.E5); headerClicks = 0; }
+  setTimeout(()=> headerClicks = 0, 800);
+});
+
+/* ------------------ small accessibility & initial state ------------------ */
+/* close any open contents */
+document.querySelectorAll('.content').forEach(c => c.style.maxHeight = '0px');
+
+/* make sure main hidden until entering */
+mainContent.setAttribute('aria-hidden','true');
+enterBtn.addEventListener('click', ()=> mainContent.removeAttribute('aria-hidden'));
+</script>
+
+</body>
+</html>
